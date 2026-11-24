@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roma AD 180</title>
+<style>
+  :root { --ink: #f3ead8; --dim: rgba(243,234,216,.72); --panel: rgba(24,18,12,.62); --line: rgba(243,234,216,.22); --accent: #d8ae4a; }
+  html, body { margin: 0; height: 100%; background: #120e0a; overflow: hidden; color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+  canvas#view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #title { position: absolute; left: 20px; top: 16px; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+  #title .t { font-size: 13px; letter-spacing: .32em; color: var(--dim); }
+  #title .place { font-size: 24px; letter-spacing: .06em; margin-top: 2px; min-height: 30px; }
+  #title .note { font-size: 13px; color: var(--dim); max-width: 380px; margin-top: 2px; }
+  #status { position: absolute; right: 20px; top: 16px; text-align: right; font-size: 13px; color: var(--dim);
+    text-shadow: 0 1px 6px rgba(0,0,0,.7); font-variant-numeric: tabular-nums; }
+  #help { position: absolute; left: 20px; bottom: 16px; font-size: 13px; color: var(--dim); line-height: 1.6;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+  #help b { color: var(--ink); font-weight: 600; }
+  #places { position: absolute; right: 20px; bottom: 16px; display: flex; flex-direction: column; gap: 4px; pointer-events: auto;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+  #places button { all: unset; cursor: pointer; font-size: 13px; padding: 4px 10px; border-radius: 5px; color: var(--ink); }
+  #places button:hover, #places button:focus-visible { background: rgba(243,234,216,.16); }
+  #places button span { color: var(--accent); display: inline-block; width: 18px; }
+  #cross { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: rgba(255,255,255,.55); }
+  #start { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+    background: radial-gradient(ellipse at center, rgba(18,14,10,.55), rgba(18,14,10,.92)); cursor: pointer; }
+  #start .box { max-width: 520px; padding: 0 24px; }
+  #start h1 { font-weight: 400; font-size: 54px; letter-spacing: .2em; margin: 0; }
+  #start h2 { font-weight: 400; font-size: 15px; letter-spacing: .34em; color: var(--accent); margin: 8px 0 22px; }
+  #start p { color: var(--dim); font-size: 15px; line-height: 1.6; margin: 0 0 12px; }
+  #start p.note { font-size: 13px; font-style: italic; opacity: .85; margin-top: 4px; }
+  #start .go { margin-top: 18px; display: inline-block; border: 1px solid var(--line); border-radius: 6px; padding: 9px 22px; letter-spacing: .2em; font-size: 13px; }
+  .hidden { display: none !important; }
+  @media (max-width: 700px) { #help { display: none; } #start h1 { font-size: 36px; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="hud">
+  <div id="title"><div class="t">ROMA · AD 180</div><div class="place" id="place"></div><div class="note" id="note"></div></div>
+  <div id="status"></div>
+  <div id="cross"></div>
+  <div id="help">
+    <b>W A S D</b> walk · <b>Shift</b> run · <b>Mouse</b> look (click to capture, Esc to release)<br>
+    <b>F</b> fly on/off · <b>E / Q</b> up / down · <b>[ ]</b> time of day · <b>1–9</b> jump to a place · <b>P</b> effects on/off · <b>H</b> hide this
+  </div>
+  <div id="places"></div>
+</div>
+<div id="start">
+  <div class="box">
+    <h1>ROMA</h1>
+    <h2>ANNO DOMINI 180</h2>
+    <p id="startmsg">Building the city…</p>
+    <p>A walkable sketch of the centre of Rome in the last year of Marcus Aurelius. Buildings added after 180 are left out.</p>
+    <p class="note">Not the work of a historian: a hobby project for trying out AI tools and workflows. Much is simplified or invented, so treat it as an impression, not a reference.</p>
+    <div class="go hidden" id="go">CLICK TO ENTER</div>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
